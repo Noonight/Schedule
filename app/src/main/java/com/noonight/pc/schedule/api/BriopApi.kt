@@ -8,7 +8,7 @@ import retrofit2.http.GET
  */
 interface BriopApi {
     @GET("/api.php")
-    fun getLessons() : Call<Lessons>
+    fun getLessons() : Call<List<Lessons>>
 
     @GET("/api.php")
     fun getUsers_type() : Call<Users_Type>

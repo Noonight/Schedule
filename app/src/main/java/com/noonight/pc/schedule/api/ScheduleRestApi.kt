@@ -22,7 +22,7 @@ class ScheduleRestApi : ScheduleApi {
         Log.d("completed briopApi -> $brioApi")
     }
 
-    override fun getLessons(): Call<Lessons> {
+    override fun getLessons(): Call<List<Lessons>> {
         return brioApi.getLessons()
     }
 

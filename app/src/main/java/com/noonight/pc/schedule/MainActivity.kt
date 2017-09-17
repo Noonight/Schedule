@@ -3,14 +3,11 @@ package com.noonight.pc.schedule
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.Toolbar
 //import android.widget.Toolbar
 import com.noonight.pc.schedule.loger.Log
-import com.noonight.pc.schedule.schedules.ScheduleFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.noonight.pc.schedule.schedules.lessons.ScheduleFragment
 
 
 class MainActivity : AppCompatActivity() {

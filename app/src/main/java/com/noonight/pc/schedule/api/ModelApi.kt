@@ -1,16 +1,9 @@
 package com.noonight.pc.schedule.api
 
-import java.sql.Time
-import java.util.*
-
-/**
- * Created by PC on 9/16/2017.
- */
-
 class Lessons(
         val id_lesson: Int,
-        val day: Date,
-        val start_time: Time,
+        val day: String,
+        val start_time: String,
         val long_time: Int,
         val id_courses: Int
 )
@@ -30,8 +23,8 @@ class Courses(
         val id_courses: Int,
         val title: String,
         val description: String,
-        val start_date: Date,
-        val end_date: Date,
+        val start_date: String,
+        val end_date: String,
         val id_user_lecturer: Int
 )
 

@@ -6,25 +6,16 @@
     android:orientation="horizontal"
     android:padding="5dip">
 
-    <!-- Left Thumbnail image -->
-
-    <ImageView
-        android:id="@+id/img_thumbnail"
-        android:layout_width="50dip"
-        android:layout_height="50dip"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" />
-
-    <!-- Description -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/img_thumbnail"
-        android:layout_toRightOf="@+id/img_thumbnail"
         android:textColor="#040404"
         android:textSize="15sp"
         android:textStyle="bold"

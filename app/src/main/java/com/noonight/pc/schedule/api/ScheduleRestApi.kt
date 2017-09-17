@@ -1,5 +1,6 @@
 package com.noonight.pc.schedule.api
 
+import com.noonight.pc.schedule.loger.Log
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -12,11 +13,13 @@ class ScheduleRestApi : ScheduleApi {
     private val brioApi: BriopApi
 
     init {
+        Log.d("init Schedule Rest API")
         val retrofit = Retrofit.Builder()
                 .baseUrl("10.0.2.2")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
         brioApi = retrofit.create(BriopApi::class.java)
+        Log.d("completed briopApi -> $brioApi")
     }
 
     override fun getLessons(): Call<Lessons> {

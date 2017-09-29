@@ -1,23 +1,22 @@
 package com.noonight.pc.schedule.schedules.lessons.adapter
 
-import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.noonight.pc.schedule.schedules.LessonsItem
-
+import com.noonight.pc.schedule.api.Lessons
+import com.noonight.pc.schedule.loger.Log
 
 class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: ArrayList<LessonsItem>
-    private var delegateAdapters = SparseArrayCompat<ScheduleDelegateAdapter>()
+    private var items: ArrayList<LessonInterface>
+    private var delegateAdapters = mutableListOf<ScheduleDelegateAdapter>()
 
     init {
-        delegateAdapters.put(1, LessonDelegateAdapter())
+        delegateAdapters.add(LessonDelegateAdapter())
         items = ArrayList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return delegateAdapters.get(1).onCreateViewHolder(parent)
+        return delegateAdapters.get(viewType).onCreateViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -28,18 +27,22 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return items.size
     }
 
-    fun addLessons(lessons: List<LessonsItem>) {
-        val initPosition = items.size - 1
-        items.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
+    /*override fun getItemViewType(position: Int): Int {
+        return this.items.get(position).getViewType()
+    }*/
+
+    fun addLessons(lessons: List<Lessons>) {
+        Log.d(lessons.toString())
+        //val initPosition = items.size - 1
+        //items.removeAt(initPosition)
+        //notifyItemRemoved(initPosition)
 
         // insert news and the loading at the end of the list
         items.addAll(lessons)
-        //items.add(loadingItem)
-        notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item */)
+        notifyItemRangeChanged(0, items.size /* plus loading item */)
     }
 
-    fun clearAndAddLessons(lessons: List<LessonsItem>) {
+    fun clearAndAddLessons(lessons: List<Lessons>) {
         items.clear()
         notifyItemRangeRemoved(0, getLastPosition())
 
@@ -49,10 +52,12 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    fun getLessons(): List<LessonsItem> {
+    fun getLessons(): List<Lessons> {
         return items
+                //.filter { it.getViewType() == AdapterConstants.ITEM }
+                .map { it as Lessons }
                 //.filter { it.getViewType() == AdapterConstants.NEWS }
-                .map { it as LessonsItem }
+                //.map { it }
 
     }
 

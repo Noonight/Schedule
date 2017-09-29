@@ -1,35 +1,35 @@
 package com.noonight.pc.schedule
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.Toolbar
+import com.noonight.pc.schedule.api.Lessons
 //import android.widget.Toolbar
 import com.noonight.pc.schedule.loger.Log
 import com.noonight.pc.schedule.schedules.lessons.ScheduleFragment
+import com.orm.SugarRecord
+import com.orm.SugarRecord.listAll
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
-    val toolbar: Toolbar by lazy {
-        toolbar
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
-
-        Log.d("savedInstanceState -> $savedInstanceState")
-        if (savedInstanceState == null) {
-            changeFragment(ScheduleFragment())
-        }
+        startService(Intent(this, LoadService::class.java))
+        /*val intent = Intent(this, LoadService::class.java)
+        startService(intent)*/
+        //Log.d(SugarRecord.listAll(Lessons::class.java).toString())
+        changeFragment(ScheduleFragment())
     }
 
     fun changeFragment(fragment: Fragment, cleanStack: Boolean = false) {
-        Log.d("run method changeFragment")
+        Log.l()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if (cleanStack) {
             clearBackStack()
@@ -46,28 +46,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clearBackStack() {
-        Log.d("run method clearBackStack()")
+        Log.l()
         val manager = supportFragmentManager
         if (manager.backStackEntryCount > 0) {
             val first = manager.getBackStackEntryAt(0)
-            Log.d("getBackStackEntryAt(0) -> from supportFragmentManager -> $first ;\n" +
-                    "id -> ${first.id}")
-            manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            Log.d("supportFragmentManager.popBackStack(${first.id}, " +
-                    "FragmentManager.POP_BACK_STACK_INCLUSIVE -> ${FragmentManager.POP_BACK_STACK_INCLUSIVE})")
 
+            manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
     override fun onBackPressed() {
-        Log.d("run method onBackPressed")
+        Log.l()
         val fragmentManager = supportFragmentManager
-        Log.d("before if -> backStackEntryCount -> ${fragmentManager.backStackEntryCount}")
         if (fragmentManager.backStackEntryCount > 1) {
-            Log.d("using popbackStack")
             fragmentManager.popBackStack()
         } else {
-            Log.d("out app")
             finish()
         }
     }

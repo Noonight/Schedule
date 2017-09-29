@@ -1,26 +1,24 @@
 package com.noonight.pc.schedule.schedules.lessons
 
-
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.noonight.pc.schedule.LoadService
 import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.R
-import com.noonight.pc.schedule.schedules.Lessons
-import com.noonight.pc.schedule.schedules.RxBaseFragment
+import com.noonight.pc.schedule.api.Lessons
+import com.noonight.pc.schedule.api.RestApi
+import com.noonight.pc.schedule.schedules.lessons.adapter.LessonAdapter
 import kotlinx.android.synthetic.main.schedule_fragment.*
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-
-/**
- * A simple [Fragment] subclass.
- */
-class ScheduleFragment : RxBaseFragment() {
+class ScheduleFragment : Fragment() {
 
     private var lessons: Lessons? = null
     private val lessonsManager by lazy {
@@ -34,58 +32,39 @@ class ScheduleFragment : RxBaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //btnStartService.setOnClickListener { activity.startService(Intent(context, LoadService::class.java)) }
+        //btnStopService.setOnClickListener { activity.stopService(Intent(context, LoadService::class.java)) }
         lessons_list.apply {
             setHasFixedSize(true)
             val linearLayout = LinearLayoutManager(context)
             layoutManager = linearLayout
-            clearOnScrollListeners()
-            //addOnScrollListener(InfiniteScrollListener({ requestNews() }, linearLayout))
         }
 
         initAdapter()
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_REDDIT_NEWS)) {
-            redditNews = savedInstanceState.get(KEY_REDDIT_NEWS) as RedditNews
-            (news_list.adapter as NewsAdapter).clearAndAddNews(redditNews!!.news)
-        } else {
-            requestNews()
-        }
+        /*val intent = Intent(context, LoadService::class.java)
+        activity.startService(intent)*/
+
+        addData()
+        //(lessons_list.adapter as LessonAdapter).addLessons(lessonsManager.getLessons())
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val news = (news_list.adapter as NewsAdapter).getNews()
-        if (redditNews != null && news.size > 0) {
-            outState.putParcelable(KEY_REDDIT_NEWS, redditNews?.copy(news = news))
-        }
-    }
-
-    private fun requestNews() {
-        /**
-         * first time will send empty string for after parameter.
-         * Next time we will have redditNews set with the next page to
-         * navigate with the after param.
-         */
-
-        val subscription = newsManager.getNews(redditNews?.after ?: "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { retrievedNews ->
-                            //(news_list.adapter as NewsAdapter).addNews(retrievedNews)
-                            redditNews = retrievedNews
-                            (news_list.adapter as NewsAdapter).addNews(retrievedNews.news)
-                        },
-                        { e ->
-                            Snackbar.make(news_list, e.message ?: "", Snackbar.LENGTH_LONG).show()
-                        }
-                )
-        subscriptions.add(subscription)
+    //TODO its bad need paralel lib -> rx2 and use up code!!!
+    private fun addData() {
+        val api = RestApi()
+        api.getLessons().enqueue(object : Callback<List<Lessons>> {
+            override fun onFailure(call: Call<List<Lessons>>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<List<Lessons>>?, response: Response<List<Lessons>>?) {
+                (lessons_list.adapter as LessonAdapter).addLessons(response!!.body())
+            }
+        })
+        /*val intent = Intent(context, LoadService::class.java)
+        activity.startService(intent)*/
     }
 
     private fun initAdapter() {
-        if (news_list.adapter == null)
-            news_list.adapter = NewsAdapter()
+        if (lessons_list.adapter == null)
+            lessons_list.adapter = LessonAdapter()
     }
 
 

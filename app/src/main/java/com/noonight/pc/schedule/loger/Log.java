@@ -11,6 +11,10 @@ import static android.content.ContentValues.TAG;
 public final class Log {
 
 
+    public static void l() {
+        android.util.Log.d(getLocation(), "");
+    }
+
     public static void d(String msg) {
         android.util.Log.d(getLocation(),/* getLocation() + */msg);
     }

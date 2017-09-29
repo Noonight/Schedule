@@ -37,9 +37,8 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         //items.removeAt(initPosition)
         //notifyItemRemoved(initPosition)
 
-        // insert news and the loading at the end of the list
         items.addAll(lessons)
-        notifyItemRangeChanged(0, items.size /* plus loading item */)
+        notifyItemRangeChanged(0, items.size)
     }
 
     fun clearAndAddLessons(lessons: List<Lessons>) {

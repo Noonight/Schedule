@@ -15,7 +15,6 @@ object ScheduleManagerJava {
 
     val lessonsLocal = lessons
 
-    //Log.d(lessons.toString());
     val lessons: List<Lessons>
         get() {
             val lessons = ArrayList<Lessons>()

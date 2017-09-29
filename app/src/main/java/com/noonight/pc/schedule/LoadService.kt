@@ -21,15 +21,11 @@ class LoadService(private val api: RestApi = RestApi()) : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.l()
-        var curTime = Date().time
         Thread(Runnable {
             loadData()
             stopSelf()
         }).start()
-        var newCurTime = Date().time
-        Toast.makeText(applicationContext, "LOAD COMPLETED: ${newCurTime}", 2).show()
-        //loadData()
+        Toast.makeText(applicationContext, "LOAD COMPLETED", 2).show()
         return super.onStartCommand(intent, flags, startId)
     }
 

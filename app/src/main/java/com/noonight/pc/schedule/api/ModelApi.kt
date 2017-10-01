@@ -1,8 +1,6 @@
 package com.noonight.pc.schedule.api
 
-import android.os.Parcel
-import android.os.Parcelable
-import com.noonight.pc.schedule.schedules.lessons.adapter.LessonInterface
+import com.noonight.pc.schedule.schedules.adapter.LessonInterface
 import com.orm.SugarRecord
 
 /*data class Lessons(

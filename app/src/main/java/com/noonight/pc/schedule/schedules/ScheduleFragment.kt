@@ -1,4 +1,4 @@
-package com.noonight.pc.schedule.schedules.lessons
+package com.noonight.pc.schedule.schedules
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,8 +10,7 @@ import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.api.Lessons
 import com.noonight.pc.schedule.localDB.DBManager
-import com.noonight.pc.schedule.schedules.lessons.adapter.LessonAdapter
-import com.orm.SugarRecord
+import com.noonight.pc.schedule.schedules.adapter.LessonAdapter
 import kotlinx.android.synthetic.main.schedule_fragment.*
 
 class ScheduleFragment : Fragment() {
@@ -39,8 +38,8 @@ class ScheduleFragment : Fragment() {
         addData()
     }
     //TODO its bad need paralel lib -> rx2 and use up code!!! Через Сервис и Thread
-    private fun addData() {
-        (lessons_list.adapter as LessonAdapter).addLessons(DBManager().getLessons())
+    fun addData() {
+        (lessons_list.adapter as LessonAdapter).addLessonsLocal(DBManager().getLessonsLocal())
         /*val api = RestApi()
         api.getLessons().enqueue(object : Callback<List<Lessons>> {
             override fun onFailure(call: Call<List<Lessons>>?, t: Throwable?) {

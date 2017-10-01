@@ -23,10 +23,12 @@
         <meta-data android:name="DATABASE" android:value="schedule.db" />
         <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.noonight.pc.schedule.api" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.noonight.pc.schedule.localDB" />
 
-        <service android:name=".LoadService"
-            android:enabled="true"/>
+        <service
+            android:name=".LoadService"
+            android:enabled="true"
+            />
     </application>
 
 </manifest>

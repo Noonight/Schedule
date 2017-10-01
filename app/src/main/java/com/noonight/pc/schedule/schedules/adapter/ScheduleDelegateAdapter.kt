@@ -1,4 +1,4 @@
-package com.noonight.pc.schedule.schedules.lessons.adapter
+package com.noonight.pc.schedule.schedules.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

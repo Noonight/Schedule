@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="Show schedule" />
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Second" />
+        <item
+            android:id="@+id/nav_update_db"
+            android:icon="@android:drawable/ic_popup_sync"
+            android:title="Sync schedule" />
+    </group>
+
+    <item android:title="Sub items">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_sub_first"
+                    android:icon="?attr/actionModeShareDrawable"
+                    android:title="Sub item 1" />
+                <item
+                    android:id="@+id/nav_sub_second"
+                    android:icon="@android:drawable/presence_video_online"
+                    android:title="Sub item 2" />
+            </group>
+        </menu>
+    </item>
+</menu>

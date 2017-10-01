@@ -1,8 +1,9 @@
-package com.noonight.pc.schedule.schedules.lessons.adapter
+package com.noonight.pc.schedule.schedules.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.noonight.pc.schedule.api.Lessons
+import com.noonight.pc.schedule.localDB.LessonsLocal
 import com.noonight.pc.schedule.loger.Log
 
 class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,6 +31,16 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     /*override fun getItemViewType(position: Int): Int {
         return this.items.get(position).getViewType()
     }*/
+
+    fun addLessonsLocal(lessons: List<LessonsLocal>) {
+        Log.d(lessons.toString())
+        //val initPosition = items.size - 1
+        //items.removeAt(initPosition)
+        //notifyItemRemoved(initPosition)
+
+        items.addAll(lessons)
+        notifyItemRangeChanged(0, items.size)
+    }
 
     fun addLessons(lessons: List<Lessons>) {
         Log.d(lessons.toString())

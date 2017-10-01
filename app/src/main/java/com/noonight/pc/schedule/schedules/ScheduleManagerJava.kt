@@ -1,4 +1,4 @@
-package com.noonight.pc.schedule.schedules.lessons
+package com.noonight.pc.schedule.schedules
 
 import com.noonight.pc.schedule.api.Lessons
 import com.noonight.pc.schedule.api.RestApi

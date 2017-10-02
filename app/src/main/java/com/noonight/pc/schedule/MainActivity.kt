@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.noonight.pc.schedule.courses.CoursesFragment
 import com.noonight.pc.schedule.localDB.DBManager
 import com.noonight.pc.schedule.localDB.Users_TypeLocal
 //import android.widget.Toolbar
@@ -28,36 +29,30 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
+    var prevTitle: CharSequence? = null
+    private var drawerToggle: ActionBarDrawerToggle? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         addToolbar()
-
-        //startService(Intent(this, LoadService::class.java))
-
-       // DBManager().query()
-
         changeFragment(ScheduleFragment())
     }
-
-    private var drawerToggle: ActionBarDrawerToggle? = null
 
     fun addToolbar() {
         setSupportActionBar(toolbar)
 
         setupDrawerContent(nvView)
 
-
-        //nvView.addHeaderView(nvView.inflateHeaderView(R.layout.nav_header))
         val headerLayout: View = nvView.inflateHeaderView(R.layout.nav_header)
         val headerText: TextView = headerLayout.findViewById(R.id.header) as TextView
-        headerText.text = "My Second Simple Header"
-        //header.text = "My simple header"
-        //nvView.header.text="My First Simple Header"
+        headerText.text = "Your login name here\nMay be photo too"
 
         drawerToggle = setupDrawerToggle()
         drawer_layout.addDrawerListener(drawerToggle!!)
+
+        nvView.menu.findItem(R.id.nav_schedule).setChecked(true)
     }
 
     fun setupDrawerToggle(): ActionBarDrawerToggle {
@@ -75,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupDrawerContent(navigationView: NavigationView) {
-        navigationView.setNavigationItemSelectedListener(object: NavigationView.OnNavigationItemSelectedListener {
+        navigationView.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 selectDrawerItem(item)
                 return true
@@ -83,40 +78,53 @@ class MainActivity : AppCompatActivity() {
         })
         //navigationView.setNavigationItemSelectedListener({item -> selectDrawerItem(item); return@setNavigationItemSelectedListener true })
     }
-    var prevTitle: CharSequence? = null
+
     fun selectDrawerItem(menuItem: MenuItem) {
-        var fragment: Fragment? = null
         when (menuItem.itemId) {
-            R.id.nav_schedule -> fragment = ScheduleFragment()
-            R.id.nav_second_fragment -> Toast.makeText(this, "second clicked", 2).show()
-            R.id.nav_update_db -> {
-                //DBManager().deleteAllLocal()
-                startService(Intent(this, LoadService::class.java))
-                //TimeUnit.MINUTES.sleep(1)
-                //fragment = ScheduleFragment()
-                //ScheduleFragment().addData()
-                toast("Don't working")
+            R.id.nav_schedule -> {
+                changeCurentViewFragment(ScheduleFragment())
+                menuItem.setChecked(true)
             }
-            R.id.nav_sub_first -> Toast.makeText(this, "sub item first clicked", 2).show()
-            R.id.nav_sub_second -> toast("sub item second clicked")
-            else -> fragment = ScheduleFragment()
+            R.id.nav_clear_db -> {
+                DBManager().deleteAllLocal()
+                toast("Delete complete but... \ndon't working")
+            }
+            R.id.nav_update_db -> {
+                startService(Intent(this, LoadService::class.java))
+                //toast("Update complete but... \ndon't working")
+            }
+            R.id.nav_courses -> {
+                changeCurentViewFragment(CoursesFragment())
+                menuItem.setChecked(true)
+            }
+            R.id.nav_log_out -> {
+                toast("Действия ещё нет. Пусто!")
+            }
+            else -> toast("don't clicked")
         }
-        if (fragment != null)
-            changeFragment(fragment!!)
-        menuItem.setChecked(true)
-        prevTitle = title
-        setTitle(menuItem.title)
-        drawer_layout.closeDrawers()
+        //drawer_layout.closeDrawers() закрывает шторку
+    }
+
+    private fun changeCurentViewFragment(fragment: Fragment) {
+        val curFragment = supportFragmentManager.findFragmentByTag(ScheduleFragment().getTagName())
+        if (curFragment.isVisible && curFragment == fragment.targetFragment) {
+        } else {
+            if (fragment != null) {
+                changeFragment(fragment)
+                prevTitle = title
+                setTitle((fragment as FragmentTitleInterface).getTitle())
+                drawer_layout.closeDrawers()
+            }
+        }
     }
 
     private fun toast(s: String) {
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean/* = when (item.itemId) {
         R.id.home -> consume { drawer_layout.openDrawer(GravityCompat.START) }
-        else -> super.onOptionsItemSelected(item)*/
-    {
+        else -> super.onOptionsItemSelected(item)*/ {
         if (drawerToggle!!.onOptionsItemSelected(item))
             return true
         return super.onOptionsItemSelected(item)
@@ -126,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         function()
         return true
     }
-
+    var prevFragment: Fragment? = null
     fun changeFragment(fragment: Fragment, cleanStack: Boolean = false) {
         Log.l()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -139,7 +147,8 @@ class MainActivity : AppCompatActivity() {
                 R.anim.abc_popup_enter,
                 R.anim.abc_popup_exit
         )
-        fragmentTransaction.replace(R.id.activity_base_content, fragment)
+        prevFragment = fragment
+        fragmentTransaction.replace(R.id.activity_base_content, fragment, (fragment as FragmentTagNameInterface).getTagName())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }

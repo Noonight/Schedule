@@ -6,26 +6,27 @@
             android:icon="@android:drawable/ic_menu_today"
             android:title="Show schedule" />
         <item
-            android:id="@+id/nav_second_fragment"
+            android:id="@+id/nav_courses"
             android:icon="@android:drawable/ic_menu_manage"
-            android:title="Second" />
+            android:title="Show courses" />
         <item
-            android:id="@+id/nav_update_db"
+            android:id="@+id/nav_log_out"
             android:icon="@android:drawable/ic_popup_sync"
-            android:title="Sync schedule" />
+            android:title="Log Out" />
     </group>
 
-    <item android:title="Sub items">
+    <item android:title="Service"
+        android:icon="@android:drawable/ic_menu_manage">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_sub_first"
-                    android:icon="?attr/actionModeShareDrawable"
-                    android:title="Sub item 1" />
+                    android:id="@+id/nav_clear_db"
+                    android:icon="@android:drawable/ic_menu_manage"
+                    android:title="Clear DB" />
                 <item
-                    android:id="@+id/nav_sub_second"
-                    android:icon="@android:drawable/presence_video_online"
-                    android:title="Sub item 2" />
+                    android:id="@+id/nav_update_db"
+                    android:icon="@android:drawable/ic_popup_sync"
+                    android:title="Load DB" />
             </group>
         </menu>
     </item>

@@ -28,10 +28,6 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return items.size
     }
 
-    /*override fun getItemViewType(position: Int): Int {
-        return this.items.get(position).getViewType()
-    }*/
-
     fun addLessonsLocal(lessons: List<LessonsLocal>) {
         Log.d(lessons.toString())
         //val initPosition = items.size - 1

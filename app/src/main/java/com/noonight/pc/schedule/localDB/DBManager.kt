@@ -1,9 +1,8 @@
 package com.noonight.pc.schedule.localDB
 
 import com.noonight.pc.schedule.api.*
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 import com.orm.SugarRecord
-import java.util.*
 
 
 class DBManager {

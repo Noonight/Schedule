@@ -1,8 +1,6 @@
-package com.noonight.pc.schedule.loger;
+package com.noonight.pc.schedule.extensions.loger;
 
 import android.text.TextUtils;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by PC on 9/17/2017.

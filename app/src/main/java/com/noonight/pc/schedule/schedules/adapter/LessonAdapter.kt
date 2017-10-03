@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.noonight.pc.schedule.api.Lessons
 import com.noonight.pc.schedule.localDB.LessonsLocal
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 
 class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

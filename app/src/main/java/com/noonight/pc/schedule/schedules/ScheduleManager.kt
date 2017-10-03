@@ -4,7 +4,7 @@ package com.noonight.pc.schedule.schedules
 import android.os.AsyncTask
 import com.noonight.pc.schedule.api.Lessons
 import com.noonight.pc.schedule.api.RestApi
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

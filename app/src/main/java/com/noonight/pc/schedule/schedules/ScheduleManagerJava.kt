@@ -2,7 +2,7 @@ package com.noonight.pc.schedule.schedules
 
 import com.noonight.pc.schedule.api.Lessons
 import com.noonight.pc.schedule.api.RestApi
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 
 import java.util.ArrayList
 

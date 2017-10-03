@@ -28,11 +28,7 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        lessons_list.apply {
-            setHasFixedSize(true)
-            val linearLayout = LinearLayoutManager(context)
-            layoutManager = linearLayout
-        }
+        lessonsApply()
 
         initAdapter()
 
@@ -40,9 +36,21 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
     }
 
     fun reloadData() {
+        lessonsApply()
+
         initAdapter()
+
         addData()
     }
+
+    fun lessonsApply() {
+        lessons_list.apply {
+            setHasFixedSize(true)
+            val linearLayout = LinearLayoutManager(context)
+            layoutManager = linearLayout
+        }
+    }
+
     //TODO its bad need paralel lib -> rx2 and use up code!!! Через Сервис и Thread
     fun addData() {
         (lessons_list.adapter as LessonAdapter).addLessonsLocal(DBManager().getLessonsLocal())

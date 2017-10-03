@@ -1,14 +1,14 @@
 package com.noonight.pc.schedule
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
@@ -16,15 +16,11 @@ import android.widget.TextView
 import android.widget.Toast
 import com.noonight.pc.schedule.courses.CoursesFragment
 import com.noonight.pc.schedule.localDB.DBManager
-import com.noonight.pc.schedule.localDB.Users_TypeLocal
 //import android.widget.Toolbar
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.schedules.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header.*
-import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +28,13 @@ class MainActivity : AppCompatActivity() {
     var prevTitle: CharSequence? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
 
+    companion object {
+        val context: Activity? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         addToolbar()
         changeFragment(ScheduleFragment())
     }
@@ -118,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun toast(s: String) {
+    fun toast(s: String) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
@@ -130,11 +129,9 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    inline fun consume(function: () -> Unit): Boolean {
-        function()
-        return true
-    }
+
     var prevFragment: Fragment? = null
+
     fun changeFragment(fragment: Fragment, cleanStack: Boolean = false) {
         Log.l()
         val fragmentTransaction = supportFragmentManager.beginTransaction()

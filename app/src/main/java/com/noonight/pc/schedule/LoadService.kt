@@ -3,16 +3,13 @@ package com.noonight.pc.schedule
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.widget.Toast
 import com.noonight.pc.schedule.api.*
 import com.noonight.pc.schedule.localDB.*
-import com.noonight.pc.schedule.loger.Log
+import com.noonight.pc.schedule.extensions.loger.Log
 import com.orm.SugarRecord
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 class LoadService(private val api: RestApi = RestApi()) : Service() {
 

@@ -25,16 +25,9 @@ class CourseDelegateAdapter : CourseDelegateAdapterInterface {
 
     class TurnsViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             parent.inflate(R.layout.courses_item)
-    ), View.OnClickListener {
-        // dont working
-        override fun onClick(p0: View) {
-            //if (p0.click)
-            val position: Int = adapterPosition
-            Log.d("$position")
-        }
-
+    ) {
         fun bind(item: CoursesLocal) = with(itemView) {
-            itemView.setOnClickListener { Log.d("$adapterPosition") } // dont working
+            //itemView.setOnClickListener { Log.d("$adapterPosition") }
             tvCourseItemTitle.text = item.title
             tvCourseItemDescription.text = item.description
             tvCourseItemTeacher.text = item.user_lecturer?.name

@@ -3,5 +3,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="tvHeader">Header</string>
+    <string name="sign_in">Войти</string>
+    <string name="pas">Пароль</string>
+    <string name="login">Логин</string>
 
 </resources>

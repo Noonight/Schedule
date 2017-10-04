@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.noonight.pc.schedule.MainActivity
 
-/**
- * Created by PC on 9/17/2017.
- */
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }

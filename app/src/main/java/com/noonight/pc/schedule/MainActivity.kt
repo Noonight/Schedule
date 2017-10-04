@@ -27,14 +27,13 @@ class MainActivity : AppCompatActivity() {
 
     var prevTitle: CharSequence? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
-
-    companion object {
-        val context: Activity? = null
-    }
+    private var currentLogin: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        currentLogin = intent.getStringExtra("login")
+        toast("login is = $currentLogin")
         addToolbar()
         changeFragment(ScheduleFragment())
     }
@@ -90,10 +89,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.nav_update_db -> {
                 startService(Intent(this, LoadService::class.java))
-                //toast("Update complete but... \ndon't working")
             }
             R.id.nav_courses -> {
-                changeCurentViewFragment(CoursesFragment())
+                changeCurentViewFragment(CoursesFragment().newFragment(this))
                 menuItem.setChecked(true)
             }
             R.id.nav_log_out -> {
@@ -101,7 +99,6 @@ class MainActivity : AppCompatActivity() {
             }
             else -> toast("don't clicked")
         }
-        //drawer_layout.closeDrawers() закрывает шторку
     }
 
     private fun changeCurentViewFragment(fragment: Fragment) {

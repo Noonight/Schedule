@@ -1,5 +1,7 @@
 package com.noonight.pc.schedule.courses
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,11 +10,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import com.noonight.pc.schedule.FragmentTagNameInterface
-import com.noonight.pc.schedule.FragmentTitleInterface
+import android.widget.AdapterView
+import android.widget.Toast
+import com.noonight.pc.schedule.*
 
-import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.courses.adapter.CourseAdapter
+import com.noonight.pc.schedule.courses.single_course.CourseSingleFragment
 import com.noonight.pc.schedule.extensions.consume
 import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.extensions.loger.Log
@@ -20,7 +23,13 @@ import com.noonight.pc.schedule.extensions.toast
 import com.noonight.pc.schedule.localDB.DBManager
 import kotlinx.android.synthetic.main.courses_fragment.*
 
-class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInterface {
+class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInterface, InstanceInterface {
+    var rootActivity: Activity? = null
+
+    override fun newFragment(activity: Activity): Fragment {
+        rootActivity = activity
+        return this
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,6 +43,8 @@ class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInter
 
         initAdapter()
 
+        (courses_list.adapter as CourseAdapter).putContext(context = context, activity = rootActivity!!)
+
         addData()
     }
 
@@ -42,10 +53,12 @@ class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInter
             setHasFixedSize(true)
             val linearLayout = LinearLayoutManager(context)
             layoutManager = linearLayout
-            /*setOnTouchListener { view, motionEvent -> consume { Log.d("${getChildAdapterPosition(focusedChild)}") }  }
-            setOnClickListener { Log.d("${getChildAdapterPosition(focusedChild)}") }*/
         }
 
+    }
+
+    fun openItemFragment() {
+        activity.supportFragmentManager.beginTransaction().add(CourseSingleFragment(), CourseSingleFragment::getTagName.toString()).commit()
     }
 
     private fun initAdapter() {

@@ -11,6 +11,7 @@ import com.noonight.pc.schedule.FragmentTitleInterface
 import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.api.Lessons
+import com.noonight.pc.schedule.extensions.toast
 import com.noonight.pc.schedule.localDB.DBManager
 import com.noonight.pc.schedule.schedules.adapter.LessonAdapter
 import kotlinx.android.synthetic.main.schedule_fragment.*
@@ -27,6 +28,9 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        //val user = arguments.getString("user", "")
+        //context.toast("us argument user $user")
 
         lessonsApply()
 

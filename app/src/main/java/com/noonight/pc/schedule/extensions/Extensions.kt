@@ -1,6 +1,7 @@
 package com.noonight.pc.schedule.extensions
 
 import android.app.Application
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -13,8 +14,8 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }
 
-fun toast(str: String) {
-    //Toast.makeText(MainActivity.context, str, Toast.LENGTH_SHORT).show()
+fun Context.toast(str: String) {
+    Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
 
 }
 

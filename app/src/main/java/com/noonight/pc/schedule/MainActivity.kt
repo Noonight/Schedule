@@ -35,7 +35,11 @@ class MainActivity : AppCompatActivity() {
         currentLogin = intent.getStringExtra("login")
         toast("login is = $currentLogin")
         addToolbar()
-        changeFragment(ScheduleFragment())
+        val frag = ScheduleFragment()
+        val bundle = Bundle()
+        bundle.putString("user", currentLogin)
+        frag.arguments = bundle
+        changeFragment(frag)
     }
 
     fun addToolbar() {

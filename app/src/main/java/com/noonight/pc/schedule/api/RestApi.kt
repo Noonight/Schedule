@@ -11,8 +11,8 @@ class RestApi : Api {
     init {
         //Log.d("init Schedule Rest API")
         val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2")
-                //.baseUrl("http://192.168.1.64")
+                //.baseUrl("http://10.0.2.2")
+                .baseUrl("http://192.168.1.64")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
         brioApi = retrofit.create(BriopApi::class.java)

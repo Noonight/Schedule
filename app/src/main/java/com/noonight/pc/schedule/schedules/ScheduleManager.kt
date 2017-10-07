@@ -61,7 +61,7 @@ class ScheduleManager(private val api: RestApi = RestApi()) {
         }
     }
 
-    private class DoIt : AsyncTask<Unit, Unit, List<Lessons>>() {
+    /*private class DoIt : AsyncTask<Unit, Unit, List<Lessons>>() {
         private var lessonse = mutableListOf<Lessons>()
 
         override fun doInBackground(vararg p0: Unit?): List<Lessons> {
@@ -100,7 +100,7 @@ class ScheduleManager(private val api: RestApi = RestApi()) {
             onPostExecute(doInBackground())
             return lessonse
         }
-    }
+    }*/
 
     /*var lessons: List<Lessons>
         get() {

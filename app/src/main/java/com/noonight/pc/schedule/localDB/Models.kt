@@ -7,7 +7,8 @@ data class LessonsLocal(
         val id_lesson: Int = -1,
         val day: String = "",
         val start_time: String = "",
-        val long_time: Int = 0,
+        val auditory: String = "",
+        val type: String = "",
         val id_courses: Int = -1,
         val cours: CoursesLocal? = null
 )  : SugarRecord(), LessonInterface

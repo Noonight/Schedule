@@ -15,7 +15,8 @@ data class Lessons(
         val id_lesson: Int = 0,
         val day: String = "",
         val start_time: String = "",
-        val long_time: Int = 0,
+        val auditory: String = "",
+        val type: String = "",
         val id_courses: Int = 0
 )  : LessonInterface, SugarRecord()
 

@@ -97,7 +97,8 @@ class LoadService(private val api: RestApi = RestApi()) : Service() {
                         i.id_lesson,
                         i.day,
                         i.start_time,
-                        i.long_time,
+                        i.auditory,
+                        i.type,
                         i.id_courses,
                         SugarRecord.find(CoursesLocal::class.java, "idcourses = ?", i.id_courses.toString()).get(0)
                 ).save()
@@ -339,7 +340,8 @@ class LoadService(private val api: RestApi = RestApi()) : Service() {
                             returnedData.get(i).id_lesson,
                             returnedData.get(i).day,
                             returnedData.get(i).start_time,
-                            returnedData.get(i).long_time,
+                            returnedData.get(i).auditory,
+                            returnedData.get(i).type,
                             returnedData.get(i).id_courses
                     ).save()
                 }

@@ -25,10 +25,15 @@ class LessonDelegateAdapter : ScheduleDelegateAdapter {
         //fun bind(item : Lessons) = with(itemView) {
         fun bind(item : LessonsLocal) = with(itemView) {
             tvScheduleItemLecturer.text = item.cours?.user_lecturer?.name
-
+            tvScheduleItemClass.text = item.auditory
             day.text = item.day
             tvScheduleItemStartTime.text = item.start_time.substring(0, item.start_time.length - 3)
             tvScheduleItemTitle.text = item.cours?.title
+            if (item.type == "ЛК") {
+                //ivScheduleItemTypeLesson.setImageIcon()
+            } else if (item.type == "ПК"){
+                //ivScheduleItemTypeLesson.setImageIcon()
+            }
         }
     }
 }

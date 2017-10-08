@@ -1,5 +1,6 @@
 package com.noonight.pc.schedule.schedules
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -21,6 +22,20 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
     private val lessonsManager by lazy {
         ScheduleManager()
     }
+    private var rootActivity: Activity? = null
+
+    companion object {
+        val POSITION_KEY = "POSITION_KEY"
+        fun newInstance(bundle: Bundle): ScheduleFragment {
+            val thisFragment = ScheduleFragment()
+            thisFragment.arguments = bundle
+            return thisFragment
+        }
+    }
+
+    fun addRoot(activity: Activity) {
+        rootActivity = activity
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.schedule_fragment)
@@ -28,18 +43,6 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        //val user = arguments.getString("user", "")
-        //context.toast("us argument user $user")
-
-        lessonsApply()
-
-        initAdapter()
-
-        addData()
-    }
-
-    fun reloadData() {
         lessonsApply()
 
         initAdapter()

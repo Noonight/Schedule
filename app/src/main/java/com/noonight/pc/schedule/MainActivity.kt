@@ -19,6 +19,7 @@ import com.noonight.pc.schedule.localDB.DBManager
 //import android.widget.Toolbar
 import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.schedules.ScheduleFragment
+import com.noonight.pc.schedule.schedules.ScheduleSlideRootPageFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -35,11 +36,10 @@ class MainActivity : AppCompatActivity() {
         currentLogin = intent.getStringExtra("login")
         toast("login is = $currentLogin")
         addToolbar()
-        val frag = ScheduleFragment()
+
         val bundle = Bundle()
         bundle.putString("user", currentLogin)
-        frag.arguments = bundle
-        changeFragment(frag)
+        changeFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
     }
 
     fun addToolbar() {
@@ -84,7 +84,9 @@ class MainActivity : AppCompatActivity() {
     fun selectDrawerItem(menuItem: MenuItem) {
         when (menuItem.itemId) {
             R.id.nav_schedule -> {
-                changeCurentViewFragment(ScheduleFragment())
+                val bundle = Bundle()
+                bundle.putString("user", currentLogin)
+                changeCurentViewFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
                 menuItem.setChecked(true)
             }
             R.id.nav_clear_db -> {
@@ -106,16 +108,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeCurentViewFragment(fragment: Fragment) {
-        val curFragment = supportFragmentManager.findFragmentByTag(ScheduleFragment().getTagName())
-        if (curFragment.isVisible && curFragment == fragment.targetFragment) {
-        } else {
+        //val curFragment = supportFragmentManager.findFragmentByTag(ScheduleFragment().getTagName())
+        //if (curFragment.isVisible && curFragment == fragment.targetFragment) {
+        //} else {
             if (fragment != null) {
                 changeFragment(fragment)
                 prevTitle = title
                 setTitle((fragment as FragmentTitleInterface).getTitle())
                 drawer_layout.closeDrawers()
             }
-        }
+        //}
     }
 
     fun toast(s: String) {

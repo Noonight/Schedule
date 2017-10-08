@@ -7,6 +7,12 @@ import com.orm.SugarRecord
 
 class DBManager {
 
+    fun getCoursesForUser(users: Users) {
+        val listeners = SugarRecord.findById(ListenersLocal::class.java, users.id_user)
+        SugarRecord.executeQuery("", users.id_user.toString())
+    }
+    fun SugarRecord.execute() {
+    }
     fun deleteAllLocal() {
         SugarRecord.deleteAll(LessonsLocal::class.java)
         SugarRecord.deleteAll(CoursesLocal::class.java)

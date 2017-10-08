@@ -26,6 +26,14 @@ import kotlinx.android.synthetic.main.courses_fragment.*
 class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInterface, InstanceInterface {
     var rootActivity: Activity? = null
 
+    companion object {
+        fun newInstance(args: Bundle): CoursesFragment {
+            val thisFragment = CoursesFragment()
+            thisFragment.arguments = args
+            return thisFragment
+        }
+    }
+
     override fun newFragment(activity: Activity): Fragment {
         rootActivity = activity
         return this

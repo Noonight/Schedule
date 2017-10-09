@@ -20,6 +20,7 @@ import com.noonight.pc.schedule.localDB.DBManager
 import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.schedules.ScheduleFragment
 import com.noonight.pc.schedule.schedules.ScheduleSlideRootPageFragment
+import com.orm.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -29,12 +30,20 @@ class MainActivity : AppCompatActivity() {
     var prevTitle: CharSequence? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var currentLogin: String? = null
+    var prevFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         currentLogin = intent.getStringExtra("login")
         toast("login is = $currentLogin")
+
+
+        //SugarContext.init(applicationContext)
+        //val schemaGenerator = SchemaGenerator(this)
+        //schemaGenerator.createDatabase(SugarDb(this).db)
+        DBManager.newInstance(this).getCoursesForUser("1")
+
         addToolbar()
 
         val bundle = Bundle()
@@ -131,9 +140,6 @@ class MainActivity : AppCompatActivity() {
             return true
         return super.onOptionsItemSelected(item)
     }
-
-
-    var prevFragment: Fragment? = null
 
     fun changeFragment(fragment: Fragment, cleanStack: Boolean = false) {
         Log.l()

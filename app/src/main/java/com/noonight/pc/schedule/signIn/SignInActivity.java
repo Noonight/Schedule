@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.noonight.pc.schedule.MainActivity;
 import com.noonight.pc.schedule.R;
+import com.noonight.pc.schedule.localDB.DBManager;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -41,7 +42,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private void btnClick() {
         if (trySignIn()) {
-            openActivity();
+            //openActivity();
+            DBManager.Companion.newInstance(this).getCoursesForUser(etSignInLogin.getText().toString());
         } else {
             Toast.makeText(this, "Логин или пароль не верны.\nПовторите попытку", Toast.LENGTH_LONG).show();
             etSignInPas.setText("");

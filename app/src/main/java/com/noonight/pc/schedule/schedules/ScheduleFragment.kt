@@ -43,11 +43,14 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        var day = arguments.getString("day")
+        var iduser = arguments.getString("id_user")
         lessonsApply()
 
         initAdapter()
 
-        addData()
+        addData(iduser, day)
     }
 
     fun lessonsApply() {
@@ -58,9 +61,14 @@ class ScheduleFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInte
         }
     }
 
+    fun update() {
+        (lessons_list.adapter as LessonAdapter).update()
+    }
+
     //TODO its bad need paralel lib -> rx2 and use up code!!! Через Сервис и Thread
-    fun addData() {
-        (lessons_list.adapter as LessonAdapter).addLessonsLocal(DBManager().getLessonsLocal())
+    fun addData(idUser: String, day: String) {
+        //(lessons_list.adapter as LessonAdapter).addLessonsLocal(DBManager().getLessonsLocal())
+        (lessons_list.adapter as LessonAdapter).addLessonsLocal(DBManager().getArrayLessonsAtDayAndForUser(idUser, day))
         /*val api = RestApi()
         api.getLessons().enqueue(object : Callback<List<Lessons>> {
             override fun onFailure(call: Call<List<Lessons>>?, t: Throwable?) {

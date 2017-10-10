@@ -46,10 +46,10 @@
                 android:layout_alignEnd="@+id/long_time"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/long_time"
-                android:layout_below="@+id/id_lesson"
                 android:layout_marginRight="8dp"
                 android:layout_toRightOf="@+id/id_lesson"
-                app:srcCompat="@mipmap/icon_briop" />
+                android:src="@mipmap/icon_briop"
+                android:layout_alignParentTop="true" />
 
             <TextView
                 android:id="@+id/tvScheduleItemStartTime"
@@ -59,6 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="8dp"
+                android:textAlignment="viewEnd"
                 android:textColor="@android:color/black"
                 app:layout_constraintLeft_toRightOf="@+id/day"
                 app:layout_constraintTop_toTopOf="parent"
@@ -82,25 +83,27 @@
                 android:id="@+id/tvScheduleItemClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvScheduleItemStartTime"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignStart="@+id/tvScheduleItemStartTime"
+                android:layout_toEndOf="@+id/tvScheduleItemTitle"
                 android:text="01230"
-                android:textColor="@android:color/black"
-                android:layout_toRightOf="@+id/tvScheduleItemTitle"
-                android:layout_toEndOf="@+id/tvScheduleItemTitle" />
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/tvScheduleItemLecturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/day"
                 android:layout_toEndOf="@+id/ivScheduleItemTypeLesson"
                 android:layout_toLeftOf="@+id/day"
                 android:layout_toRightOf="@+id/ivScheduleItemTypeLesson"
                 android:text="Ford Maxyeer Streeter"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:layout_below="@+id/day" />
         </RelativeLayout>
 
     </LinearLayout>

@@ -13,16 +13,19 @@
             android:id="@+id/ivSignInBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@mipmap/icon_briop" />
+            app:srcCompat="@mipmap/briop_image"
+            android:layout_above="@+id/constraintLayout" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="250dp"
             android:layout_height="170dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:id="@+id/constraintLayout">
 
             <EditText
                 android:id="@+id/etSignInLogin"
+                style="@android:style/Widget.DeviceDefault.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

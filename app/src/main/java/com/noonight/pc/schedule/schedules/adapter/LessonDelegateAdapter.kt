@@ -2,8 +2,10 @@ package com.noonight.pc.schedule.schedules.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.extensions.inflate
+import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.localDB.LessonsLocal
 import kotlinx.android.synthetic.main.schedule_item.view.*
 
@@ -30,10 +32,13 @@ class LessonDelegateAdapter : ScheduleDelegateAdapter {
             tvScheduleItemStartTime.text = item.start_time.substring(0, item.start_time.length - 3)
             tvScheduleItemTitle.text = item.cours?.title
             if (item.type == "ЛК") {
-                //ivScheduleItemTypeLesson.setImageIcon()
-            } else if (item.type == "ПК"){
-                //ivScheduleItemTypeLesson.setImageIcon()
+                //ivScheduleItemTypeLesson.setImageResource(R.mipmap.lk_image)
+                ivScheduleItemTypeLesson.setImageResource(R.mipmap.lk_image_dark)
+                //Log.d("------------------------------------------------------------------------------------------------")
+            } else {
+                ivScheduleItemTypeLesson.setImageResource(R.mipmap.pr_image)
             }
         }
     }
 }
+

@@ -38,6 +38,10 @@ class LessonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeChanged(0, items.size)
     }
 
+    fun update() {
+        notifyItemRangeChanged(0, items.size)
+    }
+
     fun addLessons(lessons: List<Lessons>) {
         Log.d(lessons.toString())
         //val initPosition = items.size - 1

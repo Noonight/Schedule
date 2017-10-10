@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.noonight.pc.schedule.MainActivity;
 import com.noonight.pc.schedule.R;
+import com.noonight.pc.schedule.extensions.loger.Log;
 import com.noonight.pc.schedule.localDB.DBManager;
+import com.noonight.pc.schedule.localDB.UsersLocal;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -42,21 +44,42 @@ public class SignInActivity extends AppCompatActivity {
 
     private void btnClick() {
         if (trySignIn()) {
-            //openActivity();
-            DBManager.Companion.newInstance(this).getCoursesForUser(etSignInLogin.getText().toString());
+            try {
+                DBManager db = DBManager.Companion.newInstance(this);
+                String name = etSignInLogin.getText().toString();
+                UsersLocal user = null;
+                try {
+                    user = db.getUserByName(name);
+                } catch (Exception e) {
+                    Toast.makeText(this, "Пользователь не найден", Toast.LENGTH_SHORT).show();
+                    Log.d("ошибка с получением ид юзера ( не найден ) -> " + e);
+                }
+                Log.d(" user =  " + user);
+                Log.d(String.valueOf("user id = " + user.getId_user()));
+                //db.getLessonsForUser(String.valueOf(id.getId_user()));
+                openActivity(String.valueOf(user.getId_user()));
+            } catch (Exception e) {
+                Log.d("Some error -> " + e.toString());
+            }
         } else {
             Toast.makeText(this, "Логин или пароль не верны.\nПовторите попытку", Toast.LENGTH_LONG).show();
             etSignInPas.setText("");
         }
     }
 
-    private void openActivity() {
-        Bundle args = new Bundle();
-        args.putString("login", etSignInLogin.getText().toString());
-        args.putString("pas", etSignInPas.getText().toString());
-        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-        intent.putExtras(args);
-        startActivity(intent);
+    private void openActivity(String id) {
+        if (!id.isEmpty()) {
+            try {
+                Bundle args = new Bundle();
+                args.putString("id_user", id);
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                intent.putExtras(args);
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(this, "We have some error with start activity", Toast.LENGTH_LONG).show();
+                Log.d("some eror " + e);
+            }
+        }
     }
 
     private boolean trySignIn() {

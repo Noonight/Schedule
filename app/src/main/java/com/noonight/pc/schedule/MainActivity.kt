@@ -29,25 +29,19 @@ class MainActivity : AppCompatActivity() {
 
     var prevTitle: CharSequence? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
-    private var currentLogin: String? = null
+    private var userId: String? = null
     var prevFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        currentLogin = intent.getStringExtra("login")
-        toast("login is = $currentLogin")
-
-
-        //SugarContext.init(applicationContext)
-        //val schemaGenerator = SchemaGenerator(this)
-        //schemaGenerator.createDatabase(SugarDb(this).db)
-        DBManager.newInstance(this).getCoursesForUser("1")
+        userId = intent.getStringExtra("id_user")
+        toast("user id = $userId")
 
         addToolbar()
 
         val bundle = Bundle()
-        bundle.putString("user", currentLogin)
+        bundle.putString("id_user", userId)
         changeFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
     }
 
@@ -94,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         when (menuItem.itemId) {
             R.id.nav_schedule -> {
                 val bundle = Bundle()
-                bundle.putString("user", currentLogin)
+                bundle.putString("user", userId)
                 changeCurentViewFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
                 menuItem.setChecked(true)
             }

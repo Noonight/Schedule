@@ -15,8 +15,7 @@ import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.localDB.DBManager
-import java.sql.Date
-
+import java.util.*
 
 class ScheduleSlideRootPageFragment : Fragment(), FragmentTagNameInterface, FragmentTitleInterface {
     private var rootView: View? = null
@@ -54,15 +53,21 @@ class ScheduleSlideRootPageFragment : Fragment(), FragmentTagNameInterface, Frag
         }
 
         override fun getItem(position: Int): Fragment {
+            onNotifyNeed = true
             val args = Bundle()
             args.putInt(ScheduleFragment.POSITION_KEY, position)
             var date = getItemsDate(position)
             args.putString("day", date.toString())
             args.putString("id_user", idUser)
+
             return ScheduleFragment.newInstance(args)
         }
-
+        var onNotifyNeed = false
         override fun getCount(): Int {
+            if (onNotifyNeed) {
+                onNotifyNeed = false
+                notifyDataSetChanged()
+            }
             return db.getCountDayLessonsForUser(idUser.toString())
         }
 

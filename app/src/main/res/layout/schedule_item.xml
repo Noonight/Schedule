@@ -69,15 +69,16 @@
                 android:id="@+id/day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="9/20/2017"
                 android:layout_below="@+id/tvScheduleItemTitle"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
                 android:layout_toLeftOf="@+id/tvScheduleItemStartTime"
                 android:layout_toStartOf="@+id/tvScheduleItemStartTime"
-                android:layout_marginRight="14dp"
-                android:layout_marginEnd="14dp" />
+                android:textColor="@android:color/black"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="9/20/2017" />
 
             <TextView
                 android:id="@+id/tvScheduleItemClass"
@@ -98,12 +99,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_below="@+id/tvScheduleItemTitle"
+                android:layout_marginTop="6dp"
                 android:layout_toEndOf="@+id/ivScheduleItemTypeLesson"
                 android:layout_toLeftOf="@+id/day"
                 android:layout_toRightOf="@+id/ivScheduleItemTypeLesson"
                 android:text="Ford Maxyeer Streeter"
-                android:textColor="@android:color/black"
-                android:layout_below="@+id/day" />
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black" />
         </RelativeLayout>
 
     </LinearLayout>

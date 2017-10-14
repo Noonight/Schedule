@@ -7,8 +7,9 @@ import com.noonight.pc.schedule.api.*
 import com.noonight.pc.schedule.extensions.loger.Log
 import com.orm.SugarDb
 import com.orm.SugarRecord
-import java.sql.Date
-
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DBManager {
     companion object {
@@ -69,6 +70,44 @@ class DBManager {
         }
     }
 
+    fun getCoursesForUser(id: String): MutableList<CoursesLocal> {
+        var returned = mutableListOf<CoursesLocal>()
+        val selectionArgs = arrayOf(id)
+        val sql = "SELECT c.TITLE AS title, c.DESCRIPTION AS description, c.STARTDATE AS startdate, c.ENDDATE AS enddate, usv.NAME AS name, usv.IDUSER AS iduser\n" +
+                "                FROM COURSES_LOCAL AS c,\n" +
+                "                  (SELECT u.IDUSER, u.NAME, u.IDUSERTYPE, l.IDCOURSES\n" +
+                "                  FROM USERS_LOCAL AS u INNER JOIN LISTENERS_LOCAL AS l\n" +
+                "                  ON u.IDUSER = l.IDUSER\n" +
+                "                  WHERE u.IDUSER = ?\n" +
+                "                  ORDER BY l.IDCOURSES) AS tab,\n" +
+                "                  (SELECT us.IDUSER, us.NAME\n" +
+                "                  FROM USERS_LOCAL AS us) AS usv\n" +
+                "                  WHERE tab.IDCOURSES = c.IDCOURSES\n" +
+                "                  AND usv.IDUSER = c.IDUSERLECTURER"
+        val ex = db!!.rawQuery(sql, selectionArgs)
+        if (ex.moveToFirst()) {
+            val title = ex.getColumnIndex("title")
+            val description = ex.getColumnIndex("description")
+            val startDate = ex.getColumnIndex("startdate")
+            val endDate = ex.getColumnIndex("enddate")
+            val idUser = ex.getColumnIndex("iduser")
+            do {
+                //Log.d(ex.getString(count))
+                returned.add(CoursesLocal(
+                        title = ex.getString(title),
+                        description = ex.getString(description),
+                        start_date = ex.getString(startDate),
+                        end_date = ex.getString(endDate),
+                        id_user_lecturer = Integer.parseInt(ex.getString(idUser)),
+                        user_lecturer = SugarRecord.find(UsersLocal::class.java, "iduser = ?", ex.getString(idUser))[0]
+                ))
+            } while (ex.moveToNext())
+        } else {
+            Log.d("not found rows")
+        }
+        return returned
+    }
+
     fun getCountDayLessonsForUser(id: String): Int {
         var returnedCount: Int = -1
         val selectionArgs = arrayOf(id)
@@ -122,7 +161,10 @@ class DBManager {
         if (ex.moveToFirst()) {
             val day = ex.getColumnIndex("days")
             do {
-                returned.add(Date.valueOf(ex.getString(day)))
+                val str = ex.getString(day)
+                Log.d(str)
+                //returned.add(java.sql.Date.valueOf(str.substring(0, str.length - 8).trim()))
+                returned.add(java.sql.Date.valueOf(str))
             } while (ex.moveToNext())
         } else {
             Log.d("not found rows")

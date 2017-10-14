@@ -18,6 +18,7 @@ import com.noonight.pc.schedule.courses.CoursesFragment
 import com.noonight.pc.schedule.localDB.DBManager
 //import android.widget.Toolbar
 import com.noonight.pc.schedule.extensions.loger.Log
+import com.noonight.pc.schedule.localDB.UsersLocal
 import com.noonight.pc.schedule.schedules.ScheduleFragment
 import com.noonight.pc.schedule.schedules.ScheduleSlideRootPageFragment
 import com.orm.*
@@ -52,7 +53,8 @@ class MainActivity : AppCompatActivity() {
 
         val headerLayout: View = nvView.inflateHeaderView(R.layout.nav_header)
         val headerText: TextView = headerLayout.findViewById(R.id.header) as TextView
-        headerText.text = "Your login name here\nMay be photo too"
+        Log.d("${SugarRecord.find(UsersLocal::class.java, "iduser = ?", userId)}")
+        headerText.text = "Your login name here = ${SugarRecord.find(UsersLocal::class.java, "iduser = ?", userId).get(0)}"
 
         drawerToggle = setupDrawerToggle()
         drawer_layout.addDrawerListener(drawerToggle!!)
@@ -88,19 +90,21 @@ class MainActivity : AppCompatActivity() {
         when (menuItem.itemId) {
             R.id.nav_schedule -> {
                 val bundle = Bundle()
-                bundle.putString("user", userId)
+                bundle.putString("id_user", userId)
                 changeCurentViewFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
                 menuItem.setChecked(true)
             }
             R.id.nav_clear_db -> {
-                DBManager().deleteAllLocal()
+                //DBManager().deleteAllLocal()
                 toast("Delete complete but... \ndon't working")
             }
             R.id.nav_update_db -> {
                 startService(Intent(this, LoadService::class.java))
             }
             R.id.nav_courses -> {
-                changeCurentViewFragment(CoursesFragment().newFragment(this))
+                val args = Bundle()
+                args.putString("id_user", userId)
+                changeCurentViewFragment(CoursesFragment.newInstance(args ,this))
                 menuItem.setChecked(true)
             }
             R.id.nav_log_out -> {

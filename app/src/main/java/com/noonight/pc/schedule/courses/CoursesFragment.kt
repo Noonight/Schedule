@@ -27,9 +27,10 @@ class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInter
     var rootActivity: Activity? = null
 
     companion object {
-        fun newInstance(args: Bundle): CoursesFragment {
+        fun newInstance(args: Bundle, activity: Activity): CoursesFragment {
             val thisFragment = CoursesFragment()
             thisFragment.arguments = args
+            thisFragment.rootActivity = activity
             return thisFragment
         }
     }
@@ -75,7 +76,8 @@ class CoursesFragment : Fragment(), FragmentTitleInterface, FragmentTagNameInter
     }
 
     private fun addData() {
-        (courses_list.adapter as CourseAdapter).addCourses(DBManager().getCoursesLocal())
+        val idUser = arguments.getString("id_user")
+        (courses_list.adapter as CourseAdapter).addCourses(DBManager().getCoursesForUser(idUser))
     }
 
     override fun getTitle(): String = "Курсы"

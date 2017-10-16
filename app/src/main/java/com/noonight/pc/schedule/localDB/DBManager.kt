@@ -162,7 +162,7 @@ class DBManager {
             val day = ex.getColumnIndex("days")
             do {
                 val str = ex.getString(day)
-                Log.d(str)
+                //Log.d(str)
                 //returned.add(java.sql.Date.valueOf(str.substring(0, str.length - 8).trim()))
                 returned.add(java.sql.Date.valueOf(str))
             } while (ex.moveToNext())

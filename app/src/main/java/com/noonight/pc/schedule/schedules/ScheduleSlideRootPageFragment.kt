@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.noonight.pc.schedule.FragmentTagNameInterface
 import com.noonight.pc.schedule.FragmentTitleInterface
+import com.noonight.pc.schedule.LocalVariable
 import com.noonight.pc.schedule.R
 import com.noonight.pc.schedule.extensions.inflate
 import com.noonight.pc.schedule.extensions.loger.Log
@@ -34,7 +35,7 @@ class ScheduleSlideRootPageFragment : Fragment(), FragmentTagNameInterface, Frag
         rootView = container?.inflate(R.layout.schedule_root_page_fragment)
         viewPager = rootView?.findViewById(R.id.vpScheduleRoot) as ViewPager
 
-        idUser = arguments.getString("id_user")
+        idUser = arguments.getString(LocalVariable.ID_USER)
 
         viewPager?.adapter = ScreenSlidePageAdapter.newInstance(childFragmentManager, idUser!!, context)
         return rootView

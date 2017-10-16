@@ -21,6 +21,7 @@ import com.noonight.pc.schedule.extensions.loger.Log
 import com.noonight.pc.schedule.localDB.UsersLocal
 import com.noonight.pc.schedule.schedules.ScheduleFragment
 import com.noonight.pc.schedule.schedules.ScheduleSlideRootPageFragment
+import com.noonight.pc.schedule.signIn.SignInActivity
 import com.orm.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -36,13 +37,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        userId = intent.getStringExtra("id_user")
+        userId = intent.getStringExtra(LocalVariable.ID_USER)
         toast("user id = $userId")
 
         addToolbar()
 
         val bundle = Bundle()
-        bundle.putString("id_user", userId)
+        bundle.putString(LocalVariable.ID_USER, userId)
         changeFragment(ScheduleSlideRootPageFragment.newInstance(bundle))
     }
 
@@ -54,7 +55,8 @@ class MainActivity : AppCompatActivity() {
         val headerLayout: View = nvView.inflateHeaderView(R.layout.nav_header)
         val headerText: TextView = headerLayout.findViewById(R.id.header) as TextView
         Log.d("${SugarRecord.find(UsersLocal::class.java, "iduser = ?", userId)}")
-        headerText.text = "Your login name here = ${SugarRecord.find(UsersLocal::class.java, "iduser = ?", userId).get(0)}"
+        val user = SugarRecord.find(UsersLocal::class.java, "iduser = ?", userId).get(0)
+        headerText.text = "${user.name} \n${user.user_type?.user_type}"
 
         drawerToggle = setupDrawerToggle()
         drawer_layout.addDrawerListener(drawerToggle!!)
@@ -96,10 +98,13 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.nav_clear_db -> {
                 //DBManager().deleteAllLocal()
-                toast("Delete complete but... \ndon't working")
+                //toast("Delete complete but... \ndon't working")
             }
             R.id.nav_update_db -> {
-                startService(Intent(this, LoadService::class.java))
+                if (true) {
+                } else {
+                    startService(Intent(this, LoadService::class.java))
+                }
             }
             R.id.nav_courses -> {
                 val args = Bundle()
@@ -108,7 +113,11 @@ class MainActivity : AppCompatActivity() {
                 menuItem.setChecked(true)
             }
             R.id.nav_log_out -> {
-                toast("Действия ещё нет. Пусто!")
+                val intent = Intent(this, SignInActivity::class.java)
+                intent.putExtra(SignInActivity.NEW_INSTANCE, false)
+                startActivity(intent)
+                finish()
+                //toast("Действия ещё нет. Пусто!")
             }
             else -> toast("don't clicked")
         }
